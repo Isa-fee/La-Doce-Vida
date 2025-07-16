@@ -1,11 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Testando</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block conteudo %}
+<section class="apresentacao">
+    <h2>Bem-vindo(a) ao La Doce Vida!</h2>
+    <p>Seu cantinho para descobrir, compartilhar e se deliciar com receitas doces incríveis. 🍰🍩</p>
+    <a class="botao" href="#">Ver receitas</a>
+</section>
+
+<section class="galeria">
+    <h3>Destaques da Semana</h3>
+    <div class="imagens">
+        <img src="https://via.placeholder.com/300x200?text=Brigadeiro" alt="Brigadeiro">
+        <img src="https://via.placeholder.com/300x200?text=Bolo+de+cenoura" alt="Bolo de Cenoura">
+        <img src="https://via.placeholder.com/300x200?text=Cheesecake" alt="Cheesecake">
+    </div>
+</section>
+{% endblock %}
