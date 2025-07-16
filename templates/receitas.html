@@ -2,7 +2,9 @@
 
 {% block title %}Receitas - La Doce Vida{% endblock %}
 
-{% block content %}
+{% block conteudo %}
+
+<p>Quantidade de receitas: {{ receitas|length }}</p>
   <h1>Receitas</h1>
 
   <div class="receitas-lista">
@@ -15,7 +17,7 @@
             <p><strong>Categoria:</strong> {{ receita.categoria }}</p>
             <p><strong>Tempo de preparo:</strong> {{ receita.tempo_preparo }} minutos</p>
             <p>{{ receita.descricao|truncate(150) }}</p>
-            <a href="{{ url_for('detalhe_receita', receita_id=receita.id) }}">Ver detalhes</a>
+            
           </li>
         {% endfor %}
       </ul>

@@ -10,11 +10,11 @@ def index():
 receitas_dic = [
     {
         "id": 1,
-        "titulo": "Bolo de Chocolate",
+        "titulo": "Bolo de Cenoura",
         "imagem_url": "/static/images/bolo_chocolate.jpg",
         "categoria": "Bolos",
         "tempo_preparo": 60,
-        "descricao": "Um delicioso bolo de chocolate fofinho para todas as ocasiões."
+        "descricao": "Um delicioso bolo de cenoura fofinho para todas as ocasiões."
     },
     {
         "id": 2,
@@ -29,3 +29,15 @@ receitas_dic = [
 @app.route('/receitas')
 def receitas():
     return render_template('receitas.html', receitas=receitas_dic)
+
+
+@app.route('/receita/<int:receita_id>')
+def detalhe_receita(receita_id):
+    receita = None
+    for r in receitas_dic:
+        if r["id"] == receita_id:
+            receita = r
+            break
+    if receita is None:
+        return "Receita não encontrada", 404
+    return f"<h1>{receita['titulo']}</h1><p>{receita['descricao']}</p>"
