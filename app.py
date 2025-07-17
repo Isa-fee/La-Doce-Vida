@@ -11,7 +11,7 @@ receitas_dic = [
     {
         "id": 1,
         "titulo": "Bolo de Cenoura",
-        "imagem_url": "/static/images/bolo_chocolate.jpg",
+        "imagem_url": "/static/images/bolo_cenoura.jpg",
         "categoria": "Bolos",
         "tempo_preparo": 60,
         "descricao": "Um delicioso bolo de cenoura fofinho para todas as ocasiões."
@@ -41,3 +41,7 @@ def detalhe_receita(receita_id):
     if receita is None:
         return "Receita não encontrada", 404
     return f"<h1>{receita['titulo']}</h1><p>{receita['descricao']}</p>"
+
+@app.route('/blog')
+def blog():
+    return render_template('blog.html')

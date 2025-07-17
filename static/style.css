@@ -1,12 +1,19 @@
 body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    align-content: center;
     font-family: 'Segoe UI', sans-serif;
     background-color: #fff0e6;
     color: #6b4c3b;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 
 header {
+    width: 100%;
     background-color: #76c7f0;
     padding: 20px;
     text-align: center;
@@ -72,3 +79,18 @@ footer {
     height: 200px;
     object-fit: cover;
 }
+
+.banner_blog{ 
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    border: 1px solid;
+    display: block;
+}
+
+.banner_blog>img{
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+}
+
