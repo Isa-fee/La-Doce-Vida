@@ -1,7 +1,25 @@
 from flask import Flask, render_template
 import sqlite3
 
+import json
+
 app = Flask(__name__)
+
+def carregar_json():
+    caminho_arquivo = 'dicas.json'
+    try:
+        with open(caminho_arquivo, 'r', encoding='utf-8') as arquivo:
+            dados = json.load(arquivo)
+        return dados
+    except FileNotFoundError:
+        print(f"Erro: Arquivo não encontrado em {caminho_arquivo}")
+        return None
+    except json.JSONDecodeError:
+        print(f"Erro: Formato JSON inválido em {caminho_arquivo}")
+        return None
+    except Exception as e:
+        print(f"Ocorreu um erro ao carregar o arquivo: {e}")
+        return None
 
 @app.route('/')
 def index():
@@ -44,4 +62,7 @@ def detalhe_receita(receita_id):
 
 @app.route('/blog')
 def blog():
-    return render_template('blog.html')
+    dicas = carregar_json('dicas.json')
+    if dicas is None:
+        return "Erro ao carregar as dicas", 500
+    return render_template('dicas.html', dicas=dicas)
