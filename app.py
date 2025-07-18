@@ -1,10 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, request, render_template, flash, redirect, url_for
+import json 
 import sqlite3
 
-import json
-
 app = Flask(__name__)
-
+app.secret_key = 'uma_chave_secreta_qualquer'
 def carregar_json():
     caminho_arquivo = 'dicas.json'
     try:
@@ -66,3 +65,36 @@ def blog():
     if dicas is None:
         return "Erro ao carregar as dicas", 500
     return render_template('dicas.html', dicas=dicas)
+
+def criar_tabela():
+    conexao = sqlite3.connect('usuarios.db')
+    cursor = conexao.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS usuarios (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT NOT NULL,
+            email TEXT NOT NULL
+        )
+    ''')
+    conexao.commit()
+    conexao.close()
+
+criar_tabela()
+
+@app.route('/cadastro', methods=['GET', 'POST'])
+def cadastro():
+    if request.method == 'POST':
+        nome = request.form['nome']
+        email = request.form['email']
+        senha = request.form['senha']
+        
+        conexao = sqlite3.connect('usuarios.db')
+        cursor = conexao.cursor()
+        cursor.execute('INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)', (nome, email, senha))
+        conexao.commit()
+        conexao.close()
+        
+        flash('Cadastro realizado com sucesso! 🎉', 'sucesso')
+        return redirect(url_for('cadastro'))
+    
+    return render_template('cadastro.html')
