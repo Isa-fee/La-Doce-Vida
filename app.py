@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, flash, redirect, url_for
+from flask import Flask, request, render_template, flash, redirect, url_for, session
 import json 
 import sqlite3
 
@@ -73,7 +73,8 @@ def criar_tabela():
         CREATE TABLE IF NOT EXISTS usuarios (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nome TEXT NOT NULL,
-            email TEXT NOT NULL
+            email TEXT NOT NULL,
+            senha TEXT NOT NULL
         )
     ''')
     conexao.commit()
@@ -94,7 +95,30 @@ def cadastro():
         conexao.commit()
         conexao.close()
         
-        flash('Cadastro realizado com sucesso! 🎉', 'sucesso')
+        flash('Cadastro realizado com sucesso!', 'sucesso')
         return redirect(url_for('cadastro'))
     
     return render_template('cadastro.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        senha = request.form['senha']
+
+        conexao = sqlite3.connect('usuarios.db')
+        cursor = conexao.cursor()
+        cursor.execute('SELECT * FROM usuarios WHERE email = ? AND senha = ?', (email, senha))
+        usuario = cursor.fetchone()
+        conexao.close()
+
+        if usuario:
+            session['usuario_id'] = usuario[0]
+            session['usuario_nome'] = usuario[1]
+            flash('Login realizado com sucesso!', 'sucesso')
+            return redirect(url_for('index'))
+        else:
+            flash('E-mail ou senha incorretos.', 'erro')
+            return redirect(url_for('login'))
+
+    return render_template('login.html')
