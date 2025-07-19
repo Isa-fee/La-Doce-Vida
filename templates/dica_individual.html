@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
 {% block conteudo %}
-
-<article>
+<div class="container">
+  <article class="dica-individual">
   <img src="{{ dica.imagem }}" alt="{{ dica.titulo }}">
   <h1>{{ dica.titulo }}</h1>
-  <p>{{ dica.conteudo }}</p>
+  {{ dica.conteudo | safe }}
 </article>
+</div>
+
 
 
 {% endblock %}

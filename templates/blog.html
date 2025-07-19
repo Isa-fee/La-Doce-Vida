@@ -6,15 +6,18 @@
 <div class="banner_blog">
     <img src="/static/images/Blog.jpg" alt="banner">
 </div>
-
-{% for dica in dicas %}
+<br>
+<div class="artigos">
+    {% for dica in dicas %}
   <div class="card">
     <img src="{{ dica.imagem }}" alt="{{ dica.titulo }}">
-    <h2>{{ dica.titulo }}</h2>
+    <h1>{{ dica.titulo }}</h1>
     <p>{{ dica.resumo }}</p>
     <a href="{{ url_for('dica', id=dica.id) }}">Ler mais</a>
   </div>
 {% endfor %}
+
+</div>
 
 
 {% endblock %}

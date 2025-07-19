@@ -4,6 +4,7 @@ body {
     width: 100%;
     align-items: center;
     align-content: center;
+    justify-content: center;
     font-family: 'Segoe UI', sans-serif;
     background-color: #fff0e6;
     color: #6b4c3b;
@@ -11,6 +12,10 @@ body {
     padding: 0;
     overflow-x: hidden;
 }
+p{
+    font-size: 18px;
+}
+
 
 header {
     width: 100%;
@@ -93,3 +98,63 @@ footer {
     height: auto;
 }
 
+.card{
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    border: 1px solid;
+    align-items: center;
+}
+
+.card > img{
+    width: 70%;
+}
+
+.card> h1{
+    width: 80%;
+}
+.card>p{
+    width: 80%;
+}
+
+.artigos{
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+
+}
+.dica-individual{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.dica-individual>img{
+    width: 55%;
+}
+
+.dica-individual> h1{
+    font-size:35px;
+    width: 70%;
+}
+.dica-individual>p{
+    width:70%;
+    text-align: justify;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dica-individual>ul{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: justify;
+    font-size: 18px;
+}
