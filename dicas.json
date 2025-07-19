@@ -1,16 +1,16 @@
 [
-    {
-        "id": 1,
-        "titulo": "Dicas para congelar alimentos",
-        "imagem": "/static/images/congelar.jpg",
-        "resumo": "Aprenda as melhores técnicas para congelar alimentos sem perder nutrientes",
-        "conteudo": "Conteúdo detalhado sobre congelamento..."
-    },
-    {
-        "id": 2,
-        "titulo": "Como organizar sua despensa",
-        "imagem": "/static/images/despensa.jpg",
-        "resumo": "Dicas práticas para manter sua despensa organizada e funcional",
-        "conteudo": "Conteúdo detalhado sobre organização..."
-    }
+  {
+    "id": 1,
+    "titulo": "Como reutilizar cascas de frutas",
+    "imagem": "/static/images/dica1.jpg",
+    "resumo": "Descubra como transformar cascas de frutas em deliciosas geleias e caldas.",
+    "conteudo": "Você pode aproveitar cascas de frutas como laranja, maçã e abacaxi para fazer geleias..."
+  },
+  {
+    "id": 2,
+    "titulo": "Técnica de banho-maria no forno",
+    "imagem": "/static/images/dica2.jpg",
+    "resumo": "O banho-maria no forno é ideal para pudins perfeitos. Veja como fazer.",
+    "conteudo": "Coloque sua forma com o pudim dentro de uma assadeira com água quente e leve ao forno..."
+  }
 ]

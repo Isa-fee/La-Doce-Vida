@@ -4,21 +4,12 @@ import sqlite3
 
 app = Flask(__name__)
 app.secret_key = 'uma_chave_secreta_qualquer'
-def carregar_json():
-    caminho_arquivo = 'dicas.json'
-    try:
-        with open(caminho_arquivo, 'r', encoding='utf-8') as arquivo:
-            dados = json.load(arquivo)
-        return dados
-    except FileNotFoundError:
-        print(f"Erro: Arquivo não encontrado em {caminho_arquivo}")
-        return None
-    except json.JSONDecodeError:
-        print(f"Erro: Formato JSON inválido em {caminho_arquivo}")
-        return None
-    except Exception as e:
-        print(f"Ocorreu um erro ao carregar o arquivo: {e}")
-        return None
+
+
+def carregar_dicas():
+    with open('dicas.json', 'r', encoding='utf-8') as f:
+        return json.load(f)
+
 
 @app.route('/')
 def index():
@@ -61,10 +52,17 @@ def detalhe_receita(receita_id):
 
 @app.route('/blog')
 def blog():
-    dicas = carregar_json('dicas.json')
-    if dicas is None:
-        return "Erro ao carregar as dicas", 500
-    return render_template('dicas.html', dicas=dicas)
+    dicas = carregar_dicas()
+    return render_template('blog.html', dicas=dicas)
+
+@app.route('/dica/<int:id>')
+def dica(id):
+    dicas = carregar_dicas()
+    dica_encontrada = next((d for d in dicas if d["id"] == id), None)
+    if dica_encontrada:
+        return render_template('dica_individual.html', dica=dica_encontrada)
+    else:
+        return "Dica não encontrada", 404
 
 def criar_tabela():
     conexao = sqlite3.connect('usuarios.db')

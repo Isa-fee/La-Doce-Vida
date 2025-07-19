@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<article>
+  <img src="{{ dica.imagem }}" alt="{{ dica.titulo }}">
+  <h1>{{ dica.titulo }}</h1>
+  <p>{{ dica.conteudo }}</p>
+</article>
+
+
+{% endblock %}
