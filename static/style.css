@@ -102,7 +102,6 @@ footer {
     display: flex;
     flex-direction: column;
     max-width: 600px;
-    border: 1px solid;
     align-items: center;
 }
 
@@ -157,4 +156,11 @@ footer {
     gap: 2px;
     text-align: justify;
     font-size: 18px;
+    max-width: 70%;
+}
+
+.dica-individual hr {
+    width: 70%;
+  border-top: 1px solid #843232;
+  margin: 20px 0;
 }
