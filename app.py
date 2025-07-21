@@ -1,10 +1,28 @@
-from flask import Flask, request, render_template, flash, redirect, url_for, session
-import json 
+from flask import Flask, request, render_template, flash, redirect, url_for
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from werkzeug.security import generate_password_hash
+import json
 import sqlite3
+from user import User
 
 app = Flask(__name__)
 app.secret_key = 'uma_chave_secreta_qualquer'
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    conexao = sqlite3.connect('usuarios.db')
+    cursor = conexao.cursor()
+    cursor.execute('SELECT * FROM usuarios WHERE id = ?', (user_id,))
+    resultado = cursor.fetchone()
+    conexao.close()
+
+    if resultado:
+        return User(id=resultado[0], nome=resultado[1], email=resultado[2], senha_hash=resultado[3])
+    return None
 
 def carregar_dicas():
     with open('dicas.json', 'r', encoding='utf-8') as f:
@@ -13,7 +31,7 @@ def carregar_dicas():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', usuario=current_user if current_user.is_authenticated else None)
 
 receitas_dic = [
     {
@@ -71,8 +89,8 @@ def criar_tabela():
         CREATE TABLE IF NOT EXISTS usuarios (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nome TEXT NOT NULL,
-            email TEXT NOT NULL,
-            senha TEXT NOT NULL
+            email TEXT NOT NULL UNIQUE,
+            senha_hash TEXT NOT NULL
         )
     ''')
     conexao.commit()
@@ -86,16 +104,23 @@ def cadastro():
         nome = request.form['nome']
         email = request.form['email']
         senha = request.form['senha']
+
+        senha_hash = generate_password_hash(senha)
         
         conexao = sqlite3.connect('usuarios.db')
         cursor = conexao.cursor()
-        cursor.execute('INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)', (nome, email, senha))
-        conexao.commit()
-        conexao.close()
+
+        try:
+            cursor.execute('INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)', (nome, email, senha_hash))
+            conexao.commit()
+            flash('Cadastro realizado com sucesso!', 'sucesso')
+            return redirect(url_for('login'))
         
-        flash('Cadastro realizado com sucesso!', 'sucesso')
-        return redirect(url_for('cadastro'))
-    
+        except sqlite3.IntegrityError:
+            flash('Erro: E-mail já cadastrado.', 'erro')
+
+        finally:
+            conexao.close()
     return render_template('cadastro.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -104,15 +129,9 @@ def login():
         email = request.form['email']
         senha = request.form['senha']
 
-        conexao = sqlite3.connect('usuarios.db')
-        cursor = conexao.cursor()
-        cursor.execute('SELECT * FROM usuarios WHERE email = ? AND senha = ?', (email, senha))
-        usuario = cursor.fetchone()
-        conexao.close()
-
-        if usuario:
-            session['usuario_id'] = usuario[0]
-            session['usuario_nome'] = usuario[1]
+        user = User.get(email)
+        if user and user.verify_password(senha):
+            login_user(user)
             flash('Login realizado com sucesso!', 'sucesso')
             return redirect(url_for('index'))
         else:
@@ -120,3 +139,10 @@ def login():
             return redirect(url_for('login'))
 
     return render_template('login.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('Logout realizado com sucesso!', 'sucesso')
+    return redirect(url_for('index'))
