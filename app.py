@@ -111,7 +111,7 @@ def cadastro():
         cursor = conexao.cursor()
 
         try:
-            cursor.execute('INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)', (nome, email, senha_hash))
+            cursor.execute('INSERT INTO usuarios (nome, email, senha_hash) VALUES (?, ?, ?)', (nome, email, senha_hash))
             conexao.commit()
             flash('Cadastro realizado com sucesso!', 'sucesso')
             return redirect(url_for('login'))
@@ -133,7 +133,7 @@ def login():
         if user and user.verify_password(senha):
             login_user(user)
             flash('Login realizado com sucesso!', 'sucesso')
-            return redirect(url_for('index'))
+            return redirect(url_for('perfil')) 
         else:
             flash('E-mail ou senha incorretos.', 'erro')
             return redirect(url_for('login'))
@@ -146,3 +146,51 @@ def logout():
     logout_user()
     flash('Logout realizado com sucesso!', 'sucesso')
     return redirect(url_for('index'))
+
+@app.route('/perfil')
+@login_required
+def perfil():
+    return render_template('perfil.html', usuario=current_user)
+
+@app.route('/perfil/editar', methods=['GET', 'POST'])
+@login_required
+def editar_perfil():
+    if request.method == 'POST':
+        nome = request.form['nome']
+        email = request.form['email']
+        
+        conexao = sqlite3.connect('usuarios.db')
+        cursor = conexao.cursor()
+
+        try:
+            cursor.execute('UPDATE usuarios SET nome = ?, email = ? WHERE id = ?', (nome, email, current_user.id))
+            conexao.commit()
+            flash('Perfil atualizado com sucesso!', 'sucesso')
+            return redirect(url_for('perfil'))
+        
+        except sqlite3.IntegrityError:
+            flash('Erro: E-mail já cadastrado.', 'erro')
+
+        finally:
+            conexao.close()
+
+    return render_template('editar_perfil.html', usuario=current_user)
+
+@app.route('/perfil/excluir', methods=['POST'])
+@login_required
+def excluir_conta():
+    conexao = sqlite3.connect('usuarios.db')
+    cursor = conexao.cursor()
+
+    try:
+        cursor.execute('DELETE FROM usuarios WHERE id = ?', (current_user.id,))
+        conexao.commit()
+        logout_user()
+        flash('Conta excluída com sucesso!', 'sucesso')
+        return redirect(url_for('index'))
+    
+    except Exception as e:
+        flash('Erro ao excluir conta.', 'erro')
+
+    finally:
+        conexao.close()
