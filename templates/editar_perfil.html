@@ -1,16 +1,33 @@
 {% extends 'base.html' %}
 
-{% block titulo %}Editar Perfil{% endblock %}
-
 {% block conteudo %}
+<div class="form-container">
     <h1>Editar Perfil</h1>
-    <form method="POST">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('editar_perfil') }}">
         <label>Nome:</label>
-        <input type="text" name="nome" value="{{ current_user.nome }}" required><br>
-        
+        <input type="text" name="nome" value="{{ current_user.nome }}" required>
+
         <label>Email:</label>
-        <input type="email" name="email" value="{{ current_user.email }}" required><br>
-        
-        <button type="submit">Salvar Alterações</button>
+        <input type="email" name="email" value="{{ current_user.email }}" required>
+
+        <label>Nova Senha:</label>
+        <input type="password" name="nova_senha" placeholder="Deixe em branco para manter a atual">
+
+        <div class="form-buttons">
+            <button type="submit">Salvar Alterações</button>
+            <a href="{{ url_for('perfil') }}" class="cancel-button">Cancelar</a>
+        </div>
     </form>
+</div>
 {% endblock %}

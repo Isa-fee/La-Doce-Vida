@@ -164,3 +164,56 @@ footer {
   border-top: 1px solid #843232;
   margin: 20px 0;
 }
+/*Login/cadastro*/
+.form-container {
+    max-width: 400px;
+    margin: 60px auto;
+    background-color: white;
+    padding: 30px 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #6b4c3b;
+}
+.form-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #f6a6b2;
+}
+.form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.form-container label {
+    font-weight: bold;
+}
+.form-container input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+.form-container button {
+    background-color: #ffb347;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.form-container button:hover {
+    background-color: #f6a6b2;
+}
+
+.flash {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background-color: #ffe6e6;
+    color: #843232;
+}
+/* editar informações do usuário*/

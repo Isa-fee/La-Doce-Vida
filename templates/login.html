@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block conteudo %}
+<div class="form-container">
     <h1>Login</h1>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -14,12 +15,14 @@
     {% endwith %}
 
     <form method="POST" action="{{ url_for('login') }}">
-        <label>Email:</label><br>
-        <input type="email" name="email" required><br><br>
+        <label>Email:</label>
+        <input type="email" name="email" required>
 
-        <label>Senha:</label><br>
-        <input type="password" name="senha" required><br><br>
+        <label>Senha:</label>
+        <input type="password" name="senha" required>
 
         <button type="submit">Entrar</button>
     </form>
+</div>
 {% endblock %}
+
