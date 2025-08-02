@@ -33,45 +33,12 @@ def carregar_dicas():
 def index():
     return render_template('index.html', usuario=current_user if current_user.is_authenticated else None)
 
-receitas_dic = [
-    {
-        "id": 1,
-        "titulo": "Bolo de Cenoura",
-        "imagem_url": "/static/images/bolo_cenoura.jpg",
-        "categoria": "Bolos",
-        "tempo_preparo": 60,
-        "descricao": "Um delicioso bolo de cenoura fofinho para todas as ocasiões."
-    },
-    {
-        "id": 2,
-        "titulo": "Brigadeiro",
-        "imagem_url": "/static/images/brigadeiro.jpg",
-        "categoria": "Doces",
-        "tempo_preparo": 30,
-        "descricao": "O tradicional doce brasileiro, perfeito para festas e sobremesas."
-    }
-]
-
-@app.route('/receitas')
-def receitas():
-    return render_template('receitas.html', receitas=receitas_dic)
-
-
-@app.route('/receita/<int:receita_id>')
-def detalhe_receita(receita_id):
-    receita = None
-    for r in receitas_dic:
-        if r["id"] == receita_id:
-            receita = r
-            break
-    if receita is None:
-        return "Receita não encontrada", 404
-    return f"<h1>{receita['titulo']}</h1><p>{receita['descricao']}</p>"
 
 @app.route('/blog')
 def blog():
     dicas = carregar_dicas()
     return render_template('blog.html', dicas=dicas)
+
 
 @app.route('/dica/<int:id>')
 def dica(id):
@@ -194,3 +161,73 @@ def excluir_conta():
 
     finally:
         conexao.close()
+    return render_template('excluir_perfil.html')
+
+@app.route('/receitas')
+def listar_receitas():
+    with sqlite3.connect('receitas.db') as conexao:
+        cursor = conexao.cursor()
+        cursor.execute('SELECT * FROM receitas')
+        receitas = cursor.fetchall()
+    return render_template('receitas.html', receitas=receitas)
+
+@app.route('/receita/<int:receita_id>')
+def detalhe_receita(receita_id):
+    with sqlite3.connect('receitas.db') as conexao:
+        cursor = conexao.cursor()
+        cursor.execute('SELECT * FROM receitas WHERE id = ?', (receita_id,))
+        receita = cursor.fetchone()
+    
+    if receita is None:
+        return "Receita não encontrada", 404
+    
+    return render_template('detalhe_receita.html', receita=receita)
+
+@app.route('/receita/adicionar', methods=['GET', 'POST'])
+@login_required
+def adicionar_receita():
+    if request.method == 'POST':
+        titulo = request.form['titulo']
+        imagem_url = request.form['imagem_url']
+        categoria = request.form['categoria']
+        tempo_preparo = request.form['tempo_preparo']
+        descricao = request.form['descricao']
+        
+        with sqlite3.connect('receitas.db') as conexao:
+            cursor = conexao.cursor()
+            cursor.execute('INSERT INTO receitas (titulo, imagem_url, categoria, tempo_preparo, descricao) VALUES (?, ?, ?, ?, ?)', 
+                           (titulo, imagem_url, categoria, tempo_preparo, descricao))
+            conexao.commit()
+            flash('Receita adicionada com sucesso!', 'sucesso')
+            return redirect(url_for('listar_receitas'))
+    
+    return render_template('adicionar_receita.html')
+
+
+@app.route('/receita/editar/<int:receita_id>', methods=['GET', 'POST'])
+@login_required
+def editar_receita(receita_id):
+    with sqlite3.connect('receitas.db') as conexao:
+        cursor = conexao.cursor()
+        cursor.execute('SELECT * FROM receitas WHERE id = ?', (receita_id,))
+        receita = cursor.fetchone()
+    
+    if receita is None:
+        return "Receita não encontrada", 404
+
+    if request.method == 'POST':
+        titulo = request.form['titulo']
+        imagem_url = request.form['imagem_url']
+        categoria = request.form['categoria']
+        tempo_preparo = request.form['tempo_preparo']
+        descricao = request.form['descricao']
+        
+        with sqlite3.connect('receitas.db') as conexao:
+            cursor = conexao.cursor()
+            cursor.execute('UPDATE receitas SET titulo = ?, imagem_url = ?, categoria = ?, tempo_preparo = ?, descricao = ? WHERE id = ?', 
+                           (titulo, imagem_url, categoria, tempo_preparo, descricao, receita_id))
+            conexao.commit()
+            flash('Receita atualizada com sucesso!', 'sucesso')
+            return redirect(url_for('listar_receitas')) 
+    
+    return render_template('editar_receita.html', receita=receita)

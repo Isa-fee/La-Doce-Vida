@@ -11,7 +11,7 @@
         <h1>La Doce Vida </h1>
         <nav>
             <a href="{{ url_for('index') }}">Início</a>
-            <a href="{{ url_for('receitas') }}">Receitas</a>
+            <a href="{{ url_for('listar_receitas') }}">Receitas</a>
             <a href="{{ url_for('blog') }}">Blog</a>
             {% if current_user.is_authenticated %}
                 <span>Olá, {{ current_user.nome }}!</span>
@@ -33,3 +33,4 @@
     </footer>
 </body>
 </html>
+
