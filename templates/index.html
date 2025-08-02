@@ -4,7 +4,7 @@
 <section class="apresentacao">
     <h2>Bem-vindo(a) ao La Doce Vida!</h2>
     <p>Seu cantinho para descobrir, compartilhar e se deliciar com receitas doces incríveis.</p>
-    <a class="botao" href="#">Ver receitas</a>
+    <a class="botao" href="{{url_for('listar_receitas')}}">Ver receitas</a>
 </section>
 
 <section class="galeria">
@@ -12,7 +12,13 @@
     <div class="imagens">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWXC3P-DM6Zrafn4k7rZf0uOR5Qi5OfATbfA&s" alt="Brigadeiro">
         <img src="https://canaldareceita.com.br/wp-content/uploads/2025/01/BOLO-DE-CENOURA-FOFINHO-DE-LIQUIDIFICADOR.jpg.webp" alt="Bolo de Cenoura">
-        <img src="https://cozinhaglobo.com.br/wp-content/uploads/2023/06/receita-de-cheesecake-de-morango.jpg" alt="Cheesecake">
+        <img src="https://cozinhaglobo.com.br/wp-content/uploads/2023/06/receita-de-cheesecake-de-morango.jpg" alt="Cheesecake">    
+    </div>
+    <div>
+        {% if current_user.is_authenticated %}
+        <a class="botao" href="{{ url_for('adicionar_receita') }}">Adicionar Receita</a>
+        {% endif %}
+
     </div>
 </section>
 {% endblock %}

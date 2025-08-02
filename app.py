@@ -166,10 +166,17 @@ def excluir_conta():
 @app.route('/receitas')
 def listar_receitas():
     with sqlite3.connect('receitas.db') as conexao:
+        conexao.row_factory = sqlite3.Row
         cursor = conexao.cursor()
         cursor.execute('SELECT * FROM receitas')
         receitas = cursor.fetchall()
+
+    print(f"Receitas carregadas: {len(receitas)}")  # Isso aparece no terminal
+    for r in receitas:
+        print(r['titulo'])
+
     return render_template('receitas.html', receitas=receitas)
+
 
 @app.route('/receita/<int:receita_id>')
 def detalhe_receita(receita_id):
