@@ -169,14 +169,15 @@ def listar_receitas():
         conexao.row_factory = sqlite3.Row
         cursor = conexao.cursor()
         cursor.execute('SELECT * FROM receitas')
-        receitas = cursor.fetchall()
+        receitas_rows = cursor.fetchall()  
 
-    print(f"Receitas carregadas: {len(receitas)}")  # Isso aparece no terminal
+        receitas = [dict(r) for r in receitas_rows]
+
+    print(f"Receitas carregadas: {len(receitas)}")
     for r in receitas:
         print(r['titulo'])
 
     return render_template('receitas.html', receitas=receitas)
-
 
 @app.route('/receita/<int:receita_id>')
 def detalhe_receita(receita_id):
@@ -238,3 +239,5 @@ def editar_receita(receita_id):
             return redirect(url_for('listar_receitas')) 
     
     return render_template('editar_receita.html', receita=receita)
+
+
