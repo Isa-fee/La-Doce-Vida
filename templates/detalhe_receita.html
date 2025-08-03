@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+    <div class="dica-individual">
+        <h1>{{ receita['titulo'] }}</h1>
+
+        {% if receita['imagem_url'] %}
+            <img src="{{ '/' + receita['imagem_url'] }}" alt="{{ receita['titulo'] }}">
+        {% endif %}
+
+        <p><strong>Categoria:</strong> {{ receita['categoria'] }}</p>
+        <p><strong>Tempo de preparo:</strong> {{ receita['tempo_preparo'] }} minutos</p>
+        <p><strong>Descrição:</strong> {{ receita['descricao'] }}</p>
+
+        <hr>
+
+        <h2>Ingredientes</h2>
+        <ul>
+            {% for ingrediente in receita['ingredientes'].split(';') %}
+                <li>{{ ingrediente.strip() }}</li>
+            {% endfor %}
+        </ul>
+
+        <hr>
+
+        <h2>Modo de Preparo</h2>
+        <p>{{ receita['modo_preparo'] }}</p>
+    </div>
+{% endblock %}

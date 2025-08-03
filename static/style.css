@@ -116,6 +116,9 @@ footer {
 }
 .card>p{
     width: 80%;
+    text-align: justify;
+    word-wrap: break-word;
+    white-space: normal;
 }
 
 .artigos{
@@ -124,6 +127,9 @@ footer {
     justify-content: center;
 
 }
+
+
+
 .dica-individual{
     display: flex;
     flex-direction: column;
@@ -141,10 +147,13 @@ footer {
     font-size:35px;
     width: 70%;
 }
-.dica-individual>p{
-    width:70%;
+.dica-individual p {
+    width: 70%;
     text-align: justify;
+    word-wrap: break-word;
+    white-space: normal;
 }
+
 
 .container {
     width: 100%;
@@ -278,3 +287,5 @@ main > .container {
 .form-receita button:hover {
     background-color: #f6a6b2;
 }
+
+

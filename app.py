@@ -194,6 +194,7 @@ def listar_receitas():
 @app.route('/receita/<int:receita_id>')
 def detalhe_receita(receita_id):
     with sqlite3.connect('receitas.db') as conexao:
+        conexao.row_factory = sqlite3.Row
         cursor = conexao.cursor()
         cursor.execute('SELECT * FROM receitas WHERE id = ?', (receita_id,))
         receita = cursor.fetchone()
@@ -213,6 +214,8 @@ def adicionar_receita():
         categoria = request.form['categoria']
         tempo_preparo = request.form['tempo_preparo']
         descricao = request.form['descricao']
+        Ingredientes = request.form['Ingredientes']
+        modo_preparo = request.form['modo_preparo']
         if imagem and allowed_file(imagem.filename):
             extensao = imagem.filename.rsplit('.', 1)[1].lower()
             nome_seguro = secure_filename(f"{titulo}-{current_user.id}.{extensao}")
@@ -222,8 +225,8 @@ def adicionar_receita():
         
         with sqlite3.connect('receitas.db') as conexao:
             cursor = conexao.cursor()
-            cursor.execute('INSERT INTO receitas (titulo, imagem_url, categoria, tempo_preparo, descricao) VALUES (?, ?, ?, ?, ?)', 
-                           (titulo, imagem_filename, categoria, tempo_preparo, descricao))
+            cursor.execute('INSERT INTO receitas (titulo, imagem_url, categoria, tempo_preparo, descricao, Ingredientes, modo_preparo) VALUES (?, ?, ?, ?, ?, ?, ?)', 
+                           (titulo, imagem_filename, categoria, tempo_preparo, descricao, Ingredientes, modo_preparo))
             conexao.commit()
             flash('Receita adicionada com sucesso!', 'sucesso')
             return redirect(url_for('listar_receitas'))
