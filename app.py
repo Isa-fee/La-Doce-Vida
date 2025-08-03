@@ -4,9 +4,21 @@ from werkzeug.security import generate_password_hash
 import json
 import sqlite3
 from user import User
+import os
+from werkzeug.utils import secure_filename
+
+
 
 app = Flask(__name__)
 app.secret_key = 'uma_chave_secreta_qualquer'
+
+
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
+app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -196,15 +208,22 @@ def detalhe_receita(receita_id):
 def adicionar_receita():
     if request.method == 'POST':
         titulo = request.form['titulo']
-        imagem_url = request.form['imagem_url']
+        imagem = request.files['imagem']
+        imagem_filename = None
         categoria = request.form['categoria']
         tempo_preparo = request.form['tempo_preparo']
         descricao = request.form['descricao']
+        if imagem and allowed_file(imagem.filename):
+            extensao = imagem.filename.rsplit('.', 1)[1].lower()
+            nome_seguro = secure_filename(f"{titulo}-{current_user.id}.{extensao}")
+            caminho_final = os.path.join(app.config['UPLOAD_FOLDER'], nome_seguro)
+            imagem.save(caminho_final)
+            imagem_filename = caminho_final
         
         with sqlite3.connect('receitas.db') as conexao:
             cursor = conexao.cursor()
             cursor.execute('INSERT INTO receitas (titulo, imagem_url, categoria, tempo_preparo, descricao) VALUES (?, ?, ?, ?, ?)', 
-                           (titulo, imagem_url, categoria, tempo_preparo, descricao))
+                           (titulo, imagem_filename, categoria, tempo_preparo, descricao))
             conexao.commit()
             flash('Receita adicionada com sucesso!', 'sucesso')
             return redirect(url_for('listar_receitas'))
