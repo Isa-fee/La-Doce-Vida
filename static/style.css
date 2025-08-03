@@ -32,6 +32,9 @@ nav a {
     color: white;
     font-weight: bold;
 }
+.nome_usuario{
+    color: #843232;
+}
 
 main {
     padding: 40px 20px;

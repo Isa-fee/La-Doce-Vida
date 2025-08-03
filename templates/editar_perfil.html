@@ -14,7 +14,7 @@
       {% endif %}
     {% endwith %}
 
-    <form method="POST" action="{{ url_for('editar_perfil') }}">
+    <form method="POST" action="{{ url_for('editar_perfil') }}"  enctype="multipart/form-data">
         <label>Nome:</label>
         <input type="text" name="nome" value="{{ current_user.nome }}" required>
 

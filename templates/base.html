@@ -14,13 +14,15 @@
             <a href="{{ url_for('listar_receitas') }}">Receitas</a>
             <a href="{{ url_for('blog') }}">Blog</a>
             {% if current_user.is_authenticated %}
-                <span>Olá, {{ current_user.nome }}!</span>
+                <a class="nome_usuario" href="{{ url_for('perfil') }}">Olá, {{ current_user.nome }}!</a>
                 <a href="{{ url_for('logout') }}">Logout</a>
             {% else %}
             <a href="{{ url_for('cadastro') }}">Cadastro</a>
             <a href="{{ url_for('login')}}">Login</a>
             <a href="{{url_for ('perfil')}}">Perfil</a>
+            
             {% endif %}
+            
         </nav>
     </header>
 
