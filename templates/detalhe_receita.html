@@ -1,29 +1,41 @@
 {% extends "base.html" %}
 
 {% block conteudo %}
-    <div class="dica-individual">
-        <h1>{{ receita['titulo'] }}</h1>
 
-        {% if receita['imagem_url'] %}
-            <img src="{{ '/' + receita['imagem_url'] }}" alt="{{ receita['titulo'] }}">
-        {% endif %}
+<div class="dica-individual">
 
-        <p><strong>Categoria:</strong> {{ receita['categoria'] }}</p>
-        <p><strong>Tempo de preparo:</strong> {{ receita['tempo_preparo'] }} minutos</p>
-        <p><strong>Descrição:</strong> {{ receita['descricao'] }}</p>
+    {% if receita.imagem_url %}
+    <img src="{{ '/' + receita.imagem_url }}" alt="Imagem de {{ receita.titulo }}">
+    {% endif %}
 
-        <hr>
+    <h1>{{ receita.titulo }}</h1>
 
-        <h2>Ingredientes</h2>
-        <ul>
-            {% for ingrediente in receita['ingredientes'].split(';') %}
-                <li>{{ ingrediente.strip() }}</li>
-            {% endfor %}
-        </ul>
+    <p><strong>Categoria:</strong> {{ receita.categoria }}</p>
+    <p><strong>Tempo de preparo:</strong> {{ receita.tempo_preparo }} minutos</p>
+    
+    <hr>
 
-        <hr>
+    <h2>Descrição</h2>
+    <p>{{ receita.descricao }}</p>
 
-        <h2>Modo de Preparo</h2>
-        <p>{{ receita['modo_preparo'] }}</p>
-    </div>
+    <hr>
+
+    <h2>Ingredientes</h2>
+    <ul>
+        {% for ingrediente in receita.ingredientes.split(';') %}
+            <li>{{ ingrediente.strip() }}</li>
+        {% endfor %}
+    </ul>
+
+    <hr>
+
+    <h2>Modo de Preparo</h2>
+    <ol>
+        {% for passo in receita.modo_preparo.split(';') %}
+            <li>{{ passo.strip() }}</li>
+        {% endfor %}
+    </ol>
+
+</div>
+
 {% endblock %}

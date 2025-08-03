@@ -1,28 +1,26 @@
 {% extends "base.html" %}
 
 {% block conteudo %}
-<p>Quantidade de receitas: {{ receitas|length }}</p>
+
 <h1>Receitas</h1>
 
 <div class="artigos">
-  {% if receitas %}
-    <ul>
-      {% for receita in receitas %}
-        <li class="card">
-          <h2>{{ receita.titulo }}</h2>
-          <img src="{{ receita.imagem_url }}" alt="Foto de {{ receita.titulo }}" style="max-width:300px;">
-          <p><strong>Categoria:</strong> {{ receita.categoria }}</p>
-          <p><strong>Tempo de preparo:</strong> {{ receita.tempo_preparo }} minutos</p>
-           <p>{{ receita['descricao'][:100] }}...</p>
-        </li>
-        <a href="{{ url_for('detalhe_receita', receita_id=receita['id']) }}">Quero aprender!!</a>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>Não há receitas cadastradas ainda.</p>
-  {% endif %}
+    {% if receitas %}
+        {% for receita in receitas %}
+            <div class="card">
+                {% if receita.imagem_url %}
+                    <img src="{{ '/' + receita.imagem_url }}" alt="Foto de {{ receita.titulo }}">
+                {% endif %}
+                <h1>{{ receita.titulo }}</h1>
+                <p><strong>Categoria:</strong> {{ receita.categoria }}</p>
+                <p><strong>Tempo de preparo:</strong> {{ receita.tempo_preparo }}</p>
+                <p>{{ receita.descricao[:100] }}...</p>
+                <a class="botao" href="{{ url_for('detalhe_receita', receita_id=receita.id) }}">Quero aprender!!</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Não há receitas cadastradas ainda.</p>
+    {% endif %}
 </div>
+
 {% endblock %}
-
-
-

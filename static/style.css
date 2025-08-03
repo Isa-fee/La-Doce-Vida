@@ -103,19 +103,26 @@ footer {
 .card{
     display: flex;
     flex-direction: column;
-    max-width: 600px;
+    width: 500px;
     align-items: center;
+    text-align: center;
 }
 
+
 .card > img{
-    width: 70%;
+    width: 100%;
+    height: 270px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
 }
 
 .card> h1{
-    width: 80%;
+    font-size: 1.6rem;
+    margin: 10px 0;
 }
 .card>p{
-    width: 80%;
+    width: 100%;
     text-align: justify;
     word-wrap: break-word;
     white-space: normal;
@@ -123,8 +130,10 @@ footer {
 
 .artigos{
     display: flex;
-    gap: 15px;
+    flex-wrap: wrap;
+    gap: 60px;
     justify-content: center;
+    margin-top: 30px;
 
 }
 
@@ -134,13 +143,18 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 80%;
-    margin: 0 auto;
-    padding: 10px;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    font-size: 20px;
 }
 
-.dica-individual>img{
-    width: 55%;
+.dica-individual img {
+    width: 70%;
+    height: 400px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    object-fit: cover;
 }
 
 .dica-individual> h1{
@@ -152,6 +166,7 @@ footer {
     text-align: justify;
     word-wrap: break-word;
     white-space: normal;
+    font-size: 20px;
 }
 
 
@@ -162,13 +177,33 @@ footer {
 }
 
 .dica-individual>ul{
+    list-style-type: disc;
     display: flex;
     flex-direction: column;
     gap: 2px;
     text-align: justify;
     font-size: 18px;
     max-width: 70%;
+    font-size: 20px;
 }
+
+ol {
+    
+    padding-left: 20px;
+    text-align: left;
+    width: 70%;
+    margin: 0 auto;
+    counter-reset: item;
+}
+
+ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    text-align: left;
+    width: 70%;
+    margin: 0 auto;
+}
+
 
 .dica-individual hr {
     width: 70%;
