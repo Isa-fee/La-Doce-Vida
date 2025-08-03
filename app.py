@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, flash, redirect, url_for
+from flask import Flask, request, render_template, flash, redirect, url_for, make_response
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash
 import json
@@ -43,7 +43,9 @@ def carregar_dicas():
 
 @app.route('/')
 def index():
-    return render_template('index.html', usuario=current_user if current_user.is_authenticated else None)
+    nome_cookie = request.cookies.get('nome_usuario')
+    nome = current_user.nome if current_user.is_authenticated else nome_cookie
+    return render_template('index.html', usuario=nome)
 
 
 @app.route('/blog')
@@ -112,7 +114,9 @@ def login():
         if user and user.verify_password(senha):
             login_user(user)
             flash('Login realizado com sucesso!', 'sucesso')
-            return redirect(url_for('perfil')) 
+            resposta = make_response(redirect(url_for('perfil')))
+            resposta.set_cookie('nome_usuario', user.nome, max_age=60*60*24)  
+            return resposta
         else:
             flash('E-mail ou senha incorretos.', 'erro')
             return redirect(url_for('login'))
@@ -124,7 +128,9 @@ def login():
 def logout():
     logout_user()
     flash('Logout realizado com sucesso!', 'sucesso')
-    return redirect(url_for('index'))
+    resposta = make_response(redirect(url_for('index')))
+    resposta.set_cookie('nome_usuario', '', expires=0)
+    return resposta
 
 @app.route('/perfil')
 @login_required
@@ -262,4 +268,11 @@ def editar_receita(receita_id):
     
     return render_template('editar_receita.html', receita=receita)
 
+@app.errorhandler(404)
+def pagina_nao_encontrada(e):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def erro_interno(e):
+    return render_template('500.html'), 500
 

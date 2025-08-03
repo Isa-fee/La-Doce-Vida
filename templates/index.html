@@ -2,7 +2,11 @@
 
 {% block conteudo %}
 <section class="apresentacao">
-    <h2>Bem-vindo(a) ao La Doce Vida!</h2>
+    {% if usuario %}
+        <h2>Bem-vindo(a), {{ usuario }}!</h2>
+    {% else %}
+        <h2>Bem-vindo(a) ao La Doce Vida!</h2>
+    {% endif %}
     <p>Seu cantinho para descobrir, compartilhar e se deliciar com receitas doces incríveis.</p>
     <a class="botao" href="{{url_for('listar_receitas')}}">Ver receitas</a>
 </section>
