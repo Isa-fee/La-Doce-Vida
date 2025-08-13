@@ -5,3 +5,6 @@ __pycache__/
 
 # Ignora arquivos de cache do VS Code
 .vscode/
+
+# Ignorar ambiente virtual
+env/
