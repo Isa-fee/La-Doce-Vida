@@ -2,7 +2,7 @@
 
 Um site colaborativo de receitas de doces, feito com Flask. Usuários podem visualizar, enviar, comentar e favoritar receitas.
 
-## Funcionalidades
+## 🔎 Funcionalidades
 
 - Visualização de receitas
 - Envio de novas receitas
@@ -10,14 +10,14 @@ Um site colaborativo de receitas de doces, feito com Flask. Usuários podem visu
 - Favoritar receitas
 - Autenticação de usuários
 
-## Tecnologias Utilizadas
+## 📊 Tecnologias Utilizadas
 
 - Python 3
 - Flask
 - SQLite
 - HTML / CSS
 
-## Instalação
+## 🖥️ Instalação
 
 1. **Clone o repositório do projeto para sua máquina e entre na pasta do projeto recém-clonada**
 
@@ -57,8 +57,20 @@ Um site colaborativo de receitas de doces, feito com Flask. Usuários podem visu
     flask run --debug
     ```
 
-## Contribuintes
-- [Emanoelly Francinny](https://github.com/FranbryloB)
-- [Isabele Fernanda](https://github.com/Isa-Fee)
-- [Livia Tainá](https://github.com/LiviaVolieari)
-- [Tamíris Medeiros](https://github.com/medeirostamiris)
+## 👥 Contribuintes
+
+- [Emanoelly Francinny](https://github.com/FranbryloB)  
+  Desenvolveu funcionalidades CRUD e integração do banco de receitas.  
+  Criou páginas de cadastro, estilização de login/registro e banco de dados de usuários.
+
+- [Isabele Fernanda](https://github.com/Isa-Fee)  
+  Criadora principal da estrutura do site e do banco de dados.  
+  Desenvolveu as páginas e rotas principais, sistema de receitas, páginas do blog e dicas, além de implementação de funcionalidades como exibição, adição e limpeza de receitas.
+
+- [Livia Tainá](https://github.com/LiviaVolieari)  
+  Implementou autenticação de usuário (login), criou rotas para registro de receitas e corrigiu erros na página de exibição de receitas.  
+  Responsável pelo README do projeto, melhorias na organização.
+
+- [Tamíris Medeiros](https://github.com/medeirostamiris)  
+  Implementou cookies e tratamento de erros.  
+  Adicionou segurança no login usando hash de senha e integração com Flask-Login.
