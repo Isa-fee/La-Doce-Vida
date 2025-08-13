@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 </head>
-<body>
+<body class="{% block extra_class %}{% endblock %}">
     <header>
         <h1>La Doce Vida </h1>
         <nav>
@@ -30,6 +30,9 @@
         {% block conteudo %}{% endblock %}
     </main>
 
+    {% if request.endpoint != 'index' %}
+    <a href="{{ url_for('index') }}" class="botao-voltar">Voltar para o Início</a>
+    {% endif %}
     <footer>
         <p>© 2025 La Doce Vida – Doces que encantam </p>
     </footer>
