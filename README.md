@@ -73,5 +73,4 @@ Um site colaborativo de receitas de doces, feito com Flask. Usuários podem visu
 
 - [Tamíris Medeiros](https://github.com/medeirostamiris)  
   Implementou cookies e tratamento de erros.  
-  Adicionou segurança no login usando hash de senha e integração com Flask-Login.
-  Adicionou o botão de retorno ao início em todas as páginas, incluiu novas receitas e fixou o rodapé na página de perfil.
+  Adicionou segurança no login usando hash de senha e integração com Flask-Login.                                                                                                                              Adicionou o botão de retorno ao início em todas as páginas, incluiu novas receitas e fixou o rodapé na página de perfil.                                                                                                                      
