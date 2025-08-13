@@ -372,3 +372,45 @@ main > .container {
     background-color: #f6a6b2;
 }
 
+.botao-excluir {
+    background-color: #d9534f;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.botao-excluir:hover {
+    background-color: #c9302c;
+}
+
+.botao-link {
+    display: inline-block;
+    margin: 10px 0 20px 0;
+    background-color: #ffb347;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+.botao-link:hover {
+    background-color: #f6a6b2;
+}
+
+/* Rodapé fixo no final da página */
+footer {
+    background-color: #f6a6b2;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-size: 14px;
+}
