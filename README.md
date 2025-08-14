@@ -68,9 +68,10 @@ Um site colaborativo de receitas de doces, feito com Flask. Usuários podem visu
   Desenvolveu as páginas e rotas principais, sistema de receitas, páginas do blog e dicas, além de implementação de funcionalidades como exibição, adição e limpeza de receitas.
 
 - [Livia Tainá](https://github.com/LiviaVolieari)  
-  Implementou autenticação de usuário (login), criou rotas para registro de receitas e corrigiu erros na página de exibição de receitas.  
-  Responsável pelo README do projeto, melhorias na organização.
+  Implementou autenticação de usuário (login/cadastro), criou rotas para registro de receitas e corrigiu erros na exibição de páginas.  
+  Responsável pelo README do projeto, melhorias na organização e revisão final para a entrega do projeto.
 
 - [Tamíris Medeiros](https://github.com/medeirostamiris)  
   Implementou cookies e tratamento de erros.  
-  Adicionou segurança no login usando hash de senha e integração com Flask-Login.                                                                                    Adicionou o botão de retorno ao início em todas as páginas, incluiu novas receitas e fixou o rodapé na página de perfil.                                                                                                                      
+  Adicionou segurança no login usando hash de senha e integração com Flask-Login.
+  Adicionou o botão retorno ao início em todas as páginas, incluiu novas receitas e ajustou detalhes sobre o css.
