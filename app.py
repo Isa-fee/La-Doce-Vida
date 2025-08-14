@@ -8,7 +8,6 @@ import os
 from werkzeug.utils import secure_filename
 
 
-
 app = Flask(__name__)
 app.secret_key = 'uma_chave_secreta_qualquer'
 
@@ -238,35 +237,6 @@ def adicionar_receita():
             return redirect(url_for('listar_receitas'))
     
     return render_template('adicionar_receita.html')
-
-
-@app.route('/receita/editar/<int:receita_id>', methods=['GET', 'POST'])
-@login_required
-def editar_receita(receita_id):
-    with sqlite3.connect('receitas.db') as conexao:
-        cursor = conexao.cursor()
-        cursor.execute('SELECT * FROM receitas WHERE id = ?', (receita_id,))
-        receita = cursor.fetchone()
-    
-    if receita is None:
-        return "Receita não encontrada", 404
-
-    if request.method == 'POST':
-        titulo = request.form['titulo']
-        imagem_url = request.form['imagem_url']
-        categoria = request.form['categoria']
-        tempo_preparo = request.form['tempo_preparo']
-        descricao = request.form['descricao']
-        
-        with sqlite3.connect('receitas.db') as conexao:
-            cursor = conexao.cursor()
-            cursor.execute('UPDATE receitas SET titulo = ?, imagem_url = ?, categoria = ?, tempo_preparo = ?, descricao = ? WHERE id = ?', 
-                           (titulo, imagem_url, categoria, tempo_preparo, descricao, receita_id))
-            conexao.commit()
-            flash('Receita atualizada com sucesso!', 'sucesso')
-            return redirect(url_for('listar_receitas')) 
-    
-    return render_template('editar_receita.html', receita=receita)
 
 @app.errorhandler(404)
 def pagina_nao_encontrada(e):
